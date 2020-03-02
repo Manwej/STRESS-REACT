@@ -9,14 +9,7 @@ function App() {
 
   return (
     <div className="container-fluid">
-      {/* <Hello msg='Fist Hello' />
-        <Hello msg='Second Hello' /> */}
-
-      {/* <Book book={helloBook} i={99999} /> */}
-
-      <div className="row" id="bookcontainer">
-        <Bookstore />
-      </div>
+      <Bookstore />
     </div>
   );
 }

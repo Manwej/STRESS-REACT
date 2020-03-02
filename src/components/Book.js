@@ -3,11 +3,11 @@ import "../App.css";
 import Modal from "./Modal";
 
 export default class Book extends Component {
-  //const index = props.i;
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      displayModal: false
+      displayModal: false,
+      currentImageIndex: props.i
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -20,10 +20,28 @@ export default class Book extends Component {
     // this.setState({ closeDisplayModal: !closeDisplayModal });
     this.setState({ displayModal: !displayModal });
   };
+
+  nextCarousel = () => {
+    const lastIndex = this.props.arr.books.length - 1;
+    const { currentImageIndex } = this.state;
+    const shouldResetIndex = currentImageIndex === lastIndex;
+    const index = shouldResetIndex ? 0 : currentImageIndex + 1;
+    this.setState({
+      currentImageIndex: index
+    });
+  };
+  prevCarousel = () => {
+    const lastIndex = this.props.arr.books.length - 1;
+    const { currentImageIndex } = this.state;
+    const shouldResetIndex = currentImageIndex === 0;
+    const index = shouldResetIndex ? lastIndex : currentImageIndex - 1;
+    this.setState({
+      currentImageIndex: index
+    });
+  };
   handleClick() {
     const { displayModal } = this.state;
 
-    console.log("in handle click");
     this.setState({ displayModal: !displayModal });
   }
   render() {
@@ -47,7 +65,12 @@ export default class Book extends Component {
         </div>
         <div>
           {this.state.displayModal && (
-            <Modal book={book} onClick={this.closeClick} />
+            <Modal
+              book={this.props.arr.books[this.state.currentImageIndex]}
+              onClickOne={this.closeClick}
+              onClickTwo={this.nextCarousel}
+              onClickThree={this.prevCarousel}
+            />
           )}
         </div>
       </Fragment>
